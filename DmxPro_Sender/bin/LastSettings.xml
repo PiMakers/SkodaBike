@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<parameters>
+	<AutoCycle>0</AutoCycle>
+	<Fullscreen>1</Fullscreen>
+	<wheel_radius_mm_>325</wheel_radius_mm_>
+	<Speed__km_h_>14.2422</Speed__km_h_>
+	<color>128, 128, 128, 255</color>
+</parameters>
+<DmxSettings>
+	<DMX_1>0</DMX_1>
+	<DMX_2>1</DMX_2>
+	<Sender>1</Sender>
+	<Reciver>0</Reciver>
+</DmxSettings>

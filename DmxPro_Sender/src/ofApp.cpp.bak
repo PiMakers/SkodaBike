@@ -1,0 +1,161 @@
+#include "ofApp.h"
+
+#ifndef PI
+    #define PI 3.14
+#endif // PI
+
+#define GPIO_PIN 21
+#define MAX_SPEED 50
+
+#define HOST "10.3.141.1"
+/// send on port
+#define PORT 12345
+
+static float rpm, r = 325, k; ///round/min, radius (mm),
+static uint32_t lastTick=0;
+static float speed_mps, speed_kmph; ///speed (m/s), speed (km/h)
+int lampLevel, prev_lampLevel;
+
+void alert(int gpio, int level, uint32_t tick)
+{
+    rpm = 0.00; ///sec
+    if (lastTick ) {
+
+        if (level == 0 ) {
+            rpm = (float)(tick-lastTick) / 1000000.0;
+            if ( rpm != 0 &&  rpm <= 3.8 ) rpm = 1 / rpm;
+            else rpm = 0;
+                speed_mps = 2*r * PI * rpm;
+                speed_kmph = 3.6 * speed_mps;
+                ofLogNotice() << "  Speed (m/s): " <<  speed_mps << "  Speed (km/h): " << speed_kmph;
+        }
+    }
+
+    lastTick = tick;
+}
+
+void ofApp::setup() {
+/*	ofSetFrameRate(60); // run at 60 fps
+	ofSetVerticalSync(true);
+*/
+	// open an outgoing connection to HOST:PORT
+	oscSender.setup(HOST, PORT);
+
+    parameters.setName("parameters");
+    parameters.add(autoCycle.set("AutoCycle", false));
+    parameters.add(fullscreen.set("Fullscreen", true));
+    parameters.add(radius.set("wheel radius(mm)", r, 250, 500));
+    parameters.add(maxSpeed.set("MaxSpeed", 50, 0, 100));
+    parameters.add(speed.set("Speed (km/h)", maxSpeed, 0, maxSpeed));
+    parameters.add(color.set("color",ofColor(128)));
+
+    dmxSettings.setName("DmxSettings");
+    dmxSettings.add(dmx1.set("DMX 1", true));
+    dmxSettings.add(dmx2.set("DMX 2", false));
+    dmxSettings.add(sender.set("Sender", true));
+    dmxSettings.add(reciver.set("Reciver", false));
+
+    gui.setName("DmxProSender");
+    gui.setPosition( 50,300);
+    gui.setShape(60, 100, 150, 560);
+    gui.setup(parameters,"mysettings.xml" ,50, 200);
+    gui.setup(dmxSettings,"mysettings.xml" ,300, 200);
+
+
+    if (gpioInitialise()>=0) {
+        gpioSetMode(GPIO_PIN, PI_INPUT);
+        gpioSetPullUpDown(GPIO_PIN, PI_PUD_UP);
+    }
+    else ofLogError( " error open GPIO");
+    gpioSetAlertFunc(GPIO_PIN, alert);
+
+    if (reciver) {
+        dmx.connect(0); // or use a number
+        dmx.clear();
+        dmx.update(true); // black on startUp
+    }
+
+}
+
+void ofApp::update() {
+
+    r = radius/1000;
+    ofSetFullscreen(fullscreen);
+
+
+    if (autoCycle) {
+        red = 127 + 127 * sin(2 * ofGetElapsedTimef());
+        green = 127 + 127 * sin(-2 * ofGetElapsedTimef());
+        blue = 127 + 127 * sin(1.5 * ofGetElapsedTimef());
+        color.set(ofColor(red, green, blue));
+    }
+    speed.set(speed_kmph);
+
+    k = ofMap( speed_kmph*speed_kmph, 0, maxSpeed*maxSpeed, 0, 1, true);
+    lampLevel = (int)255*k;
+
+    while (sender && prev_lampLevel != lampLevel) {
+
+        if ( prev_lampLevel - lampLevel > 0 ) prev_lampLevel--;
+        else prev_lampLevel++;
+        ofLogNotice() << "lampLevel: " << lampLevel << "     %: " << 100*k ;
+        ofLogNotice() << "prev_lampLevel: " << prev_lampLevel << "     %: " << 100*k ;
+///        dmx.setLevel(1, prev_lampLevel);
+///        dmx.setLevel(2, prev_lampLevel);
+///        dmx.setLevel(3, prev_lampLevel);
+/*
+        dmx.setLevel(4, prev_lampLevel);
+        dmx.setLevel(8, prev_lampLevel);
+/*        dmx.setLevel(6, 512-prev_lampLevel);
+        dmx.setLevel(7, 512-prev_lampLevel);
+        dmx.setLevel(8, prev_lampLevel);
+        dmx.setLevel(9, prev_lampLevel);
+        dmx.update();
+*/
+        ofxOscMessage m;
+        if (dmx1) m.setAddress("/dmx1/level");
+        else if (dmx2) m.setAddress("/dmx2/level");
+        m.addIntArg(prev_lampLevel);
+        oscSender.sendMessage(m, false);
+        sleep (0.9);
+	}
+
+
+}
+
+//--------------------------------------------------------------
+void ofApp::draw() {
+
+	ofSetColor(red, 0, 0);
+	ofDrawRectangle(0, 0, ofGetWidth() / 3, ofGetHeight());
+
+	ofSetColor( 0, green, 0);
+	ofDrawRectangle(ofGetWidth() / 3, 0, ofGetWidth() / 3, ofGetHeight());
+
+    ofSetColor( 0, 0, blue);
+    ofDrawRectangle(2*(ofGetWidth() / 3), 0, ofGetWidth() / 3, ofGetHeight());
+
+///    panel.draw();
+    gui.draw();
+}
+//--------------------------------------------------------------
+void ofApp::keyPressed(int key){
+/*	if(key == 'h'){
+		bHide = !bHide;
+	}
+*/	if(key == 's'){
+		gui.saveToFile("settings.xml");
+	}
+	else if(key == 'l'){
+		gui.loadFromFile("settings.xml");
+	}
+	else if(key == ' '){
+		color = ofColor(255);
+	}
+}
+
+void ofApp::exit(){
+	dmx.clear();
+	dmx.update(true); // black on shutdown
+	gui.saveToFile("../LastSettings.xml");
+}

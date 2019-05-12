@@ -1,0 +1,37 @@
+#pragma once
+
+#include "ofMain.h"
+#include "ofxDmx.h"
+#include "ofxGui.h"
+#include "ofxOsc.h"
+
+#include <pigpio.h>
+
+class ofApp : public ofBaseApp {
+public:
+	void setup();
+	void update();
+	void draw();
+	void keyPressed(int key);
+
+	void exit();
+
+	ofxDmx dmx;
+	int level;
+	float curTime, prevTime, rotTime;
+
+    ofxPanel panel,gpio, gui;
+    ofParameter<int> red;
+    ofParameter<int> green;
+    ofParameter<int> blue;
+    ofParameter<bool> autoCycle, fullscreen;
+    ofParameter<float> radius, speed;
+
+    ofParameterGroup parameters;
+    ofParameter<ofColor> color;
+
+    ofParameter<bool> gpio14;
+
+///    ofTrueTypeFont font;
+	ofxOscSender sender;
+};

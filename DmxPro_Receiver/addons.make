@@ -1,0 +1,3 @@
+../../../myAddons/ofxDmx
+#ofxGui
+ofxOsc

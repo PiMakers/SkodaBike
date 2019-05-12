@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<parameters>
+	<AutoCycle>0</AutoCycle>
+	<Fullscreen>1</Fullscreen>
+	<wheel_radius_mm_>325</wheel_radius_mm_>
+	<Speed__km_h_>0</Speed__km_h_>
+	<color>128, 128, 128, 255</color>
+</parameters>

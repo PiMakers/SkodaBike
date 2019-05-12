@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_workspace_layout_file>
+	<FileVersion major="1" minor="0" />
+	<ActiveProject path="DmxPro_Sender/DmxPro_Sender.cbp" />
+	<PreferredTarget name="Release" />
+	<EditorTabsLayout layout="8c4455805af018b555d4b50700000002=0;DMX_Reciver_linuxarmv6l:src/ofApp.cpp,1;DMX_Reciver_linuxarmv6l:Makefile,2;DMX_Reciver_linuxarmv6l:config.make,3;oscParametersSenderExample_linuxarmv6l:src/ofApp.cpp,4;oscParametersSenderExample_linuxarmv6l:src/ofApp.h,5;oscParametersSenderExample_linuxarmv6l:addons.make,6;DmxProSender_linuxarmv6l:config.make,*7;DmxProSender_linuxarmv6l:src/ofApp.cpp,8;DmxProSender_linuxarmv6l:src/ofApp.h,9;DmxProSender_linuxarmv6l:src/gpio.h@layout2|name=dummy;caption=;state=2098174;dir=3;layer=0;row=0;pos=0;prop=100000;bestw=646;besth=335;minw=646;minh=335;maxw=-1;maxh=-1;floatx=-1;floaty=-1;floatw=-1;floath=-1|name=8c4455805af018b555d4b50700000002;caption=;state=2098172;dir=5;layer=0;row=0;pos=0;prop=100000;bestw=200;besth=200;minw=-1;minh=-1;maxw=-1;maxh=-1;floatx=-1;floaty=-1;floatw=-1;floath=-1|dock_size(5,0,0)=202|" />
+</CodeBlocks_workspace_layout_file>

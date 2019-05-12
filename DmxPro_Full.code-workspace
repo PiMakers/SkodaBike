@@ -1,0 +1,29 @@
+{
+	"folders": [
+		{
+			"path": "/mnt/LinuxData/OF/openFrameworks"
+		},
+		{
+			"path": "DmxPro_Receiver"
+		},
+		{
+			"path": "DmxPro_Sender"
+		},
+		{
+			"path": "localAddOns"
+		},
+		{
+			"path": "/mnt/LinuxData/OF/myAddons/ofxDmx/example"
+		},
+		{
+			"path": "/mnt/LinuxData/OF/myAddons/ofxDmx/example-controller"
+		},
+		{
+			"path": "libft4222-linux-1.4.1.231"
+		},
+		{
+			"path": "."
+		}
+	],
+	"settings": {}
+}

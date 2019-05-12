@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<parameters>
+	<color>255, 255, 255, 255</color>
+</parameters>
+<group>
+	<Red>205</Red>
+	<Green>48</Green>
+	<Blue>188</Blue>
+	<AutoCycle>1</AutoCycle>
+	<wheel_radius_mm_>325</wheel_radius_mm_>
+</group>
