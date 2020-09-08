@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
-<CodeBlocks_workspace_file>
-	<Workspace title="Cross_linuxarmv6l">
-		<Project filename="../../../myAddons/ofxDmx/example/example.cbp" />
-		<Project filename="DmxPro_Receiver/DmxPro_Receiver.cbp" />
-		<Project filename="../../../openFrameworks/examples/gui/oscParametersSenderExample/oscParametersSenderExample.cbp" />
-		<Project filename="DmxPro_Sender/DmxPro_Sender.cbp" />
-	</Workspace>
-</CodeBlocks_workspace_file>

@@ -3,11 +3,6 @@
 #   This file is where we make project specific configurations.
 ################################################################################
 
-CXX = $(TOOLCHAIN_ROOT)/bin/$(GCC_PREFIX)-g++
-CC = $(TOOLCHAIN_ROOT)/bin/$(GCC_PREFIX)-gcc
-AR = $(TOOLCHAIN_ROOT)/bin/$(GCC_PREFIX)-ar
-LD = $(TOOLCHAIN_ROOT)/bin/$(GCC_PREFIX)-ld
-
 OS_RELEASE=$(shell cat $(RPI_ROOT)/etc/os-release | grep VERSION_ID= | sed "s/VERSION_ID\=\"\(.*\)\"/\1/" )
 $(info OS_RELEASE=$(OS_RELEASE))
 
@@ -16,7 +11,8 @@ $(info OS_RELEASE=$(OS_RELEASE))
 #   The location of your root openFrameworks installation
 #       (default) OF_ROOT = ../../../../openFrameworksM
 ################################################################################
-OF_ROOT = ../../../openFrameworks
+# OF_ROOT = ../../../openFrameworks
+OF_ROOT=/mnt/LinuxData/OF/GitHub/openFrameworks
 
 ################################################################################
 # PROJECT ROOT
